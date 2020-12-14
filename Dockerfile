@@ -25,8 +25,9 @@ RUN set -eux \
 # early in the build process.
 RUN curl https://deb.meteo.guru/velivole-keyring.asc | apt-key add - && \
 apt-get update ; echo "deb https://deb.meteo.guru/debian ${IMAGE_VERSION} main" > /etc/apt/sources.list.d/meteo.guru.list
+
 RUN apt-get -y update; apt-get -y install build-essential autoconf  libxml2-dev zlib1g-dev netcat gdal-bin
-RUN apt-get -y update; apt-get -y install build-essential autoconf  libxml2-dev zlib1g-dev netcat
+
 
 COPY scripts/locale.gen /etc/locale.gen
 RUN set -eux \
