@@ -105,10 +105,10 @@ ENV \
     PATH="$PATH:/usr/lib/postgresql/${POSTGRES_MAJOR_VERSION}/bin"
 # Compile pointcloud extension
 
-RUN wget -O- https://github.com/pgpointcloud/pointcloud/archive/master.tar.gz | tar xz && \
-cd pointcloud-master && \
-./autogen.sh && ./configure && make -j 4 && make install && \
-cd .. && rm -Rf pointcloud-master
+# RUN wget -O- https://github.com/pgpointcloud/pointcloud/archive/master.tar.gz | tar xz && \
+# cd pointcloud-master && \
+# ./autogen.sh && ./configure && make -j 4 && make install && \
+# cd .. && rm -Rf pointcloud-master
 
 # Cleanup resources
 RUN apt-get -y --purge autoremove  \
@@ -116,36 +116,52 @@ RUN apt-get -y --purge autoremove  \
     && rm -rf /var/lib/apt/lists/*
 
 # Open port 5432 so linked containers can see them
-EXPOSE 5432
+# EXPOSE 5432
 
 # Copy scripts
-ADD scripts /scripts
-WORKDIR /scripts
-RUN chmod +x *.sh
+# ADD scripts /scripts
+# WORKDIR /scripts
+# RUN chmod +x *.sh
 
 # Run any additional tasks here that are too tedious to put in
 # this dockerfile directly.
-RUN set -eux \
-    && /scripts/setup.sh
+# RUN set -eux \
+#     && /scripts/setup.sh
 
-VOLUME /var/lib/postgresql
+# VOLUME /var/lib/postgresql
 
-ENTRYPOINT /scripts/docker-entrypoint.sh
+# ENTRYPOINT /scripts/docker-entrypoint.sh
 
 
 ##############################################################################
 # Testing Stage                                                           #
 ##############################################################################
-FROM postgis-prod AS postgis-test
+# FROM postgis-prod AS postgis-test
 
-COPY scenario_tests/utils/requirements.txt /lib/utils/requirements.txt
+# COPY scenario_tests/utils/requirements.txt /lib/utils/requirements.txt
+
+# RUN set -eux \
+#     && export DEBIAN_FRONTEND=noninteractive \
+#     && apt-get update \
+#     && apt-get -y --no-install-recommends install python3-pip \
+#     && apt-get -y --purge autoremove \
+#     && apt-get clean \
+#     && rm -rf /var/lib/apt/lists/*
+
+# RUN pip3 install -r /lib/utils/requirements.txt
+
+#-------------Workspace Specific Stuff ----------------------------------------------------
+
+RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
 
 RUN set -eux \
     && export DEBIAN_FRONTEND=noninteractive \
     && apt-get update \
-    && apt-get -y --no-install-recommends install python3-pip \
+    && apt-get -y --no-install-recommends install nano git postgis nodejs \
     && apt-get -y --purge autoremove \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-RUN pip3 install -r /lib/utils/requirements.txt
+RUN echo 'alias bundle-features="/project/node_modules/.bin/geoprocessing bundle-features"' >> ~/.bashrc
+
+CMD bash
