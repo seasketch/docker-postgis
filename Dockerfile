@@ -29,7 +29,7 @@ RUN apt-get -y update; apt-get -y install build-essential autoconf  libxml2-dev 
 
 # Generate all locale only on deployment mode build
 # Set to empty string to generate only default locale
-ARG GENERATE_ALL_LOCALE=1
+ARG GENERATE_ALL_LOCALE=0
 ARG LANGS="en_US.UTF-8,id_ID.UTF-8"
 ARG LANG=en_US.UTF-8
 ENV LANG=en_US.UTF-8 \
@@ -138,14 +138,14 @@ ENTRYPOINT /scripts/docker-entrypoint.sh
 ##############################################################################
 FROM postgis-prod AS postgis-test
 
-COPY scenario_tests/utils/requirements.txt /lib/utils/requirements.txt
+# COPY scenario_tests/utils/requirements.txt /lib/utils/requirements.txt
 
-RUN set -eux \
-    && export DEBIAN_FRONTEND=noninteractive \
-    && apt-get update \
-    && apt-get -y --no-install-recommends install python3-pip \
-    && apt-get -y --purge autoremove \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+# RUN set -eux \
+#     && export DEBIAN_FRONTEND=noninteractive \
+#     && apt-get update \
+#     && apt-get -y --no-install-recommends install python3-pip \
+#     && apt-get -y --purge autoremove \
+#     && apt-get clean \
+#     && rm -rf /var/lib/apt/lists/*
 
-RUN pip3 install -r /lib/utils/requirements.txt
+# RUN pip3 install -r /lib/utils/requirements.txt
