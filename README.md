@@ -1,10 +1,10 @@
-# Geoprocessing Workspace
+# docker-workspace
 
-Docker containers used to create a local data processing environment.  See the [`@seasketch/geoprocessing/gp-workspace`](https://github.com/seasketch/geoprocessing/tree/master/packages) package.  Maintained as an enhanced fork of `kartoza/postgis`.
+Docker containers used to create a local data processing workspace as part of the `@seasketch/geoprocessing` framework.  See the [`@seasketch/geoprocessing/gp-workspace`](https://github.com/seasketch/geoprocessing/tree/master/packages) package.  Maintained as an enhanced fork of `kartoza/postgis`.
 * `geoprocessing-db` - runs postgis cluster.  Published from develop branch.
 * `geoprocessing-workspace` - workspace container with access to database.  Includes additional db client tools including shp2pgsql.  Published from gp-workspace branch.
 
-# docker-postgis
+# docker-postgis (foundation)
 
 A simple docker container that runs PostGIS
 
