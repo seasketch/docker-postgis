@@ -1,4 +1,4 @@
-# docker-workspace
+# docker-gp-workspace
 
 Docker containers used to create a local data processing workspace as part of the `@seasketch/geoprocessing` framework.  See the [`@seasketch/geoprocessing/gp-workspace`](https://github.com/seasketch/geoprocessing/tree/master/packages) package.  Maintained as an enhanced fork of `kartoza/postgis`.
 * `geoprocessing-db` - runs postgis cluster.  Published from develop branch.
