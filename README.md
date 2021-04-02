@@ -4,6 +4,19 @@ Docker containers used to create a local data processing workspace as part of th
 * `geoprocessing-db` - runs postgis cluster.  Published from develop branch.
 * `geoprocessing-workspace` - workspace container with access to database.  Includes additional db client tools including shp2pgsql.  Published from gp-workspace branch.
 
+## Publish multi-arch image
+
+With Docker Desktop installed (and possibly experimental features if not newest version)
+```sh
+docker buildx create --name workspacebuilder
+docker buildx use workspacebuilder
+git checkout develop
+docker buildx build --platform linux/amd64,linux/arm64 --push -t seasketch/geoprocessing-db .
+git checkout gp-workspace
+docker buildx build --platform linux/amd64,linux/arm64 --push -t seasketch/geoprocessing-workspace .
+```
+
+----
 # docker-postgis (foundation)
 
 A simple docker container that runs PostGIS
